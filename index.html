@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Nail — Премиальный бьюти-сервис в Краснодаре</title>
+    <meta name="description" content="Студия SK Nail на Красной улице. Маникюр, педикюр, наращивание, прически. Запись онлайн.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-dark: #121110;
+            --bg-card: #1c1a19;
+            --accent-gold: #c5a880;
+            --text-light: #f5f5f7;
+            --text-muted: #a1a1a6;
+        }
+        html { scroll-behavior: smooth; font-family: 'Montserrat', sans-serif; background-color: var(--bg-dark); color: var(--text-light); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Шапка — стеклянная */
+        .header {
+            background: rgba(18, 17, 16, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.1);
+        }
+        .header__container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 3px; color: var(--accent-gold); font-weight: 600; }
+        .nav__link { color: var(--text-light); text-decoration: none; margin: 0 15px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav__link:hover { color: var(--accent-gold); }
+
+        .btn {
+            display: inline-block; padding: 14px 32px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; font-size: 14px;
+            transition: all 0.3s ease; text-align: center; border: none; cursor: pointer;
+        }
+        .btn--header {
+            background: transparent; border: 1px solid var(--accent-gold);
+            color: var(--accent-gold); padding: 8px 20px; font-size: 12px;
+        }
+        .btn--header:hover { background: var(--accent-gold); color: var(--bg-dark); }
+        .btn--hero {
+            background: var(--accent-gold); color: var(--bg-dark);
+            font-size: 15px; text-transform: uppercase; letter-spacing: 1.5px;
+            box-shadow: 0 4px 20px rgba(197, 168, 128, 0.25);
+        }
+        .btn--hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(197, 168, 128, 0.4);
+        }
+        .btn--wa { background: #25d366; color: #fff; font-weight: 500; width: 100%; margin-bottom: 10px; }
+        .btn--wa:hover { background: #1ebd58; transform: translateY(-2px); }
+        .btn--online { background: var(--accent-gold); color: var(--bg-dark); font-weight: 600; width: 100%; }
+        .btn--online:hover { background: #b3966e; transform: translateY(-2px); }
+
+        /* Главный экран — фото справа */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+        .hero__content {
+            position: relative;
+            z-index: 2;
+            width: 55%;
+            padding: 120px 0 120px 5%;
+            text-align: left;
+        }
+        .hero__container { max-width: 600px; }
+        .hero__title {
+            font-family: 'Playfair Display', serif; font-size: 48px; line-height: 1.15;
+            margin-bottom: 22px; animation: fadeInUp 1s ease;
+        }
+        .hero__subtitle {
+            font-size: 18px; color: var(--text-muted); margin-bottom: 40px;
+            font-weight: 300; animation: fadeInUp 1s ease 0.1s both;
+        }
+        .hero__photo {
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 50%;
+            z-index: 1;
+        }
+        .hero__photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            mask-image: linear-gradient(to right, transparent 0%, black 30%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
+        }
+        .hero__badges {
+            display: flex; gap: 20px; margin-top: 35px;
+            font-size: 12px; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 1px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        .hero__badge { display: flex; align-items: center; gap: 6px; }
+        .hero__badge::before {
+            content: ''; width: 6px; height: 6px;
+            background: var(--accent-gold); border-radius: 50%;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        section { padding: 100px 0; }
+        .section-title {
+            font-family: 'Playfair Display', serif; font-size: 36px;
+            text-align: center; margin-bottom: 50px; color: var(--accent-gold);
+        }
+        .section-title--left { text-align: left; margin-bottom: 30px; }
+
+        /* О нас */
+        .about { background-color: var(--bg-card); text-align: center; }
+        .about__text { max-width: 700px; margin: 0 auto 50px; font-size: 17px; line-height: 1.8; color: var(--text-muted); font-weight: 300; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 40px; }
+        .feature-item {
+            background: var(--bg-dark); padding: 30px 25px; border-radius: 14px;
+            border: 1px solid #2a2826; text-align: left; transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-item:hover { transform: translateY(-5px); border-color: rgba(197, 168, 128, 0.3); }
+        .feature-title { color: var(--accent-gold); margin-bottom: 10px; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; }
+        .feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+        /* Портфолио */
+        .portfolio__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .portfolio__item {
+            position: relative; background-color: var(--bg-card); border-radius: 16px;
+            overflow: hidden; border: 1px solid #2a2826; aspect-ratio: 3/4;
+            cursor: pointer;
+        }
+        .portfolio__img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio__item:hover .portfolio__img { transform: scale(1.08); }
+        .portfolio__overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 40px 20px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            transform: translateY(10px); opacity: 0.9;
+            transition: all 0.4s ease;
+        }
+        .portfolio__item:hover .portfolio__overlay {
+            transform: translateY(0); opacity: 1;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+        }
+        .portfolio__desc {
+            font-size: 14px; text-align: center; color: var(--text-light);
+            font-weight: 500; letter-spacing: 0.5px;
+        }
+        .portfolio__tag {
+            display: inline-block; font-size: 11px; color: var(--accent-gold);
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;
+            border: 1px solid rgba(197,168,128,0.4); padding: 3px 10px; border-radius: 20px;
+        }
+
+        /* Услуги — только 3 с фото */
+        .price { background-color: var(--bg-card); }
+        .price__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+        .price__category h3 {
+            font-family: 'Playfair Display', serif; font-size: 22px;
+            color: var(--accent-gold); margin-bottom: 25px;
+            border-bottom: 1px solid #2a2826; padding-bottom: 12px;
+        }
+        .service-card {
+            display: flex; align-items: center; background-color: var(--bg-dark);
+            border: 1px solid #2a2826; border-radius: 14px; padding: 16px;
+            margin-bottom: 16px; gap: 18px; transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateX(5px);
+            border-color: rgba(197, 168, 128, 0.25);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .service-card__img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+        .service-card__info {
+            flex-grow: 1; display: flex; justify-content: space-between; align-items: center; gap: 15px;
+        }
+        .service-card__name { font-size: 15px; font-weight: 400; color: var(--text-light); line-height: 1.4; }
+        .service-card__price {
+            font-size: 16px; font-weight: 600; color: var(--accent-gold);
+            white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* Отзывы */
+        .reviews__rating { text-align: center; margin-bottom: 45px; }
+        .reviews__score { font-size: 52px; font-weight: 600; color: var(--accent-gold); display: block; line-height: 1; }
+        .reviews__stars { color: var(--accent-gold); font-size: 22px; letter-spacing: 3px; display: block; margin: 10px 0; }
+        .reviews__count { color: var(--text-muted); font-size: 14px; }
+        .reviews__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .review-card {
+            background-color: var(--bg-card); padding: 30px; border-radius: 14px;
+            border: 1px solid #2a2826; display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.3s;
+        }
+        .review-card:hover { transform: translateY(-4px); border-color: rgba(197,168,128,0.2); }
+        .review-card__text { font-style: italic; line-height: 1.7; margin-bottom: 20px; color: var(--text-muted); font-size: 14px; }
+        .review-card__author { color: var(--accent-gold); font-weight: 600; font-size: 14px; }
+
+        /* Контакты */
+        .contacts { background-color: var(--bg-card); }
+        .contacts__container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .contacts__address, .contacts__working-hours { font-size: 17px; line-height: 1.7; margin-bottom: 18px; color: var(--text-muted); }
+        .contacts__address strong { color: var(--text-light); font-weight: 500; }
+        .contacts__buttons { display: flex; flex-direction: column; gap: 12px; max-width: 320px; margin-top: 30px; }
+        .contacts__map iframe { width: 100%; height: 400px; border: 0; border-radius: 14px; filter: grayscale(0.6) contrast(1.1); }
+
+        .footer { text-align: center; padding: 35px; border-top: 1px solid #2a2826; color: var(--text-muted); font-size: 12px; letter-spacing: 0.5px; }
+
+        @media (max-width: 768px) {
+            .header .nav { display: none; }
+            .hero { flex-direction: column; }
+            .hero__photo {
+                position: relative; width: 100%; height: 45vh; order: -1;
+                mask-image: linear-gradient(to bottom, transparent 0%, black 25%) !important;
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%) !important;
+            }
+            .hero__content {
+                width: 100%; padding: 40px 20px 60px;
+                text-align: center;
+            }
+            .hero__title { font-size: 30px; }
+            .hero__badges { justify-content: center; flex-wrap: wrap; }
+            .contacts__container { grid-template-columns: 1fr; }
+            .portfolio__grid { grid-template-columns: 1fr; }
+            .service-card__info { flex-direction: column; align-items: flex-start; gap: 8px; }
+            section { padding: 70px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container header__container">
+            <div class="logo">SK NAIL</div>
+            <nav class="nav">
+                <a href="#about" class="nav__link">О нас</a>
+                <a href="#portfolio" class="nav__link">Работы</a>
+                <a href="#prices" class="nav__link">Услуги</a>
+                <a href="#reviews" class="nav__link">Отзывы</a>
+                <a href="#contacts" class="nav__link">Контакты</a>
+            </nav>
+            <a href="https://yclients.com" target="_blank" class="btn btn--header">Записаться</a>
+        </div>
+    </header>
+
+    <!-- Главный баннер — фото справа -->
+    <section class="hero">
+        <div class="hero__photo">
+            <img src="photo1.jpg" alt="Темный мерцающий маникюр">
+        </div>
+        <div class="hero__content">
+            <div class="hero__container">
+                <h1 class="hero__title">Преображение с SK Nail —<br>красота, стиль и уверенность</h1>
+                <p class="hero__subtitle">Премиальный бьюти-сервис в самом центре Краснодара</p>
+                <a href="https://yclients.com" target="_blank" class="btn btn--hero">Записаться онлайн</a>
+                <div class="hero__badges">
+                    <span class="hero__badge">Красная улица, 206</span>
+                    <span class="hero__badge">Ежедневно 10:00 — 21:00</span>
+                    <span class="hero__badge">Рейтинг 4.8</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О нас -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title reveal">Почему выбирают SK Nail</h2>
+            <p class="about__text reveal">
+                SK Nail — это полноценное бьюти-пространство в Краснодаре. Клиенты высоко оценивают качество ногтевого сервиса, изысканный стиль укладок и безупречную чистоту. Мы создаём законченные премиальные образы.
+            </p>
+            <div class="features-grid">
+                <div class="feature-item reveal">
+                    <div style="font-size: 28px; margin-bottom: 12px;">✦</div>
+                    <div class="feature-title">Комплексный уход</div>
+                    <div class="feature-desc">Маникюр, педикюр, ламинирование ресниц, прически и оформление бровей в одной студии.</div>
+                </div>
+                <div class="feature-item reveal">
+                    <div style="font-size: 28px; margin-bottom: 12px;">✦</div>
+                    <div class="feature-title">Стерильность 100%</div>
+                    <div class="feature-desc">Только стерильные инструменты в индивидуальных одноразовых пакетах из крафта.</div>
+                </div>
+                <div class="feature-item reveal">
+                    <div style="font-size: 28px; margin-bottom: 12px;">✦</div>
+                    <div class="feature-title">Гарантия на услуги</div>
+                    <div class="feature-desc">Уверены в качестве премиум материалов и предоставляем честную гарантию на покрытие.</div>
+                </div>
+                <div class="feature-item reveal">
+                    <div style="font-size: 28px; margin-bottom: 12px;">✦</div>
+                    <div class="feature-title">Удобное расположение</div>
+                    <div class="feature-desc">Салон на Красной улице. Удобный подъезд и наличие парковки для автомобилей.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Портфолио — только твои 3 фото -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title reveal">Наши работы</h2>
+            <div class="portfolio__grid">
+                <div class="portfolio__item reveal">
+                    <img src="photo1.jpg" alt="Темный мерцающий маникюр" class="portfolio__img">
+                    <div class="portfolio__overlay">
+                        <div class="portfolio__tag">Портфолио</div>
+                        <div class="portfolio__desc">Глубокий шиммер / Квадрат</div>
+                    </div>
+                </div>
+                <div class="portfolio__item reveal">
+                    <img src="photo2.jpg" alt="Молочный маникюр с лавандой" class="portfolio__img">
+                    <div class="portfolio__overlay">
+                        <div class="portfolio__tag">Портфолио</div>
+                        <div class="portfolio__desc">Нежный молочный / Короткие ногти</div>
+                    </div>
+                </div>
+                <div class="portfolio__item reveal">
+                    <img src="photo3.jpg" alt="Белый миндаль наращивание" class="portfolio__img">
+                    <div class="portfolio__overlay">
+                        <div class="portfolio__tag">Портфолио</div>
+                        <div class="portfolio__desc">Изящный белый / Форма миндаль</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги — только 3, для которых есть фото -->
+    <section id="prices" class="price">
+        <div class="container">
+            <h2 class="section-title reveal">Услуги и цены</h2>
+            <div class="price__grid">
+                <div class="price__category reveal">
+                    <h3>Ногтевой сервис</h3>
+
+                    <div class="service-card">
+                        <img src="service8.jpg" alt="Маникюр без покрытия" class="service-card__img">
+                        <div class="service-card__info">
+                            <span class="service-card__name">Аппаратный маникюр без покрытия</span>
+                            <span class="service-card__price">1 200 ₽</span>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <img src="service2.jpg" alt="Маникюр с гель-лаком" class="service-card__img">
+                        <div class="service-card__info">
+                            <span class="service-card__name">Маникюр с покрытием гель-лак</span>
+                            <span class="service-card__price">2 100 ₽</span>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <img src="service3.jpg" alt="Наращивание ногтей" class="service-card__img">
+                        <div class="service-card__info">
+                            <span class="service-card__name">Наращивание ногтей</span>
+                            <span class="service-card__price">3 500 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title reveal">Отзывы клиентов</h2>
+            <div class="reviews__rating reveal">
+                <span class="reviews__score">4.8</span>
+                <span class="reviews__stars">✦✦✦✦✦</span>
+                <span class="reviews__count">223 оценки в 2ГИС</span>
+            </div>
+            <div class="reviews__grid">
+                <div class="review-card reveal">
+                    <div>
+                        <div style="color: var(--accent-gold); margin-bottom: 12px; font-size: 14px;">✦✦✦✦✦</div>
+                        <p class="review-card__text">«Отличная студия, прекрасный персонал 💜 очень понравилось всё, от маникюра до заботы мастера и администратора 🌷»</p>
+                    </div>
+                    <span class="review-card__author">— Black H.</span>
+                </div>
+                <div class="review-card reveal">
+                    <div>
+                        <div style="color: var(--accent-gold); margin-bottom: 12px; font-size: 14px;">✦✦✦✦✦</div>
+                        <p class="review-card__text">«Мастер Мария супер! Всегда идеальный маникюр 🔥 учитывает все пожелания и особенности 👌»</p>
+                    </div>
+                    <span class="review-card__author">— Вера К.</span>
+                </div>
+                <div class="review-card reveal">
+                    <div>
+                        <div style="color: var(--accent-gold); margin-bottom: 12px; font-size: 14px;">✦✦✦✦✦</div>
+                        <p class="review-card__text">«Все понравилось. Девушка на ресепшен очень приветливая. Мастер просто умничка, работа на высоте ❤️»</p>
+                    </div>
+                    <span class="review-card__author">— Евгения Л.</span>
+                </div>
+                <div class="review-card reveal">
+                    <div>
+                        <div style="color: var(--accent-gold); margin-bottom: 12px; font-size: 14px;">✦✦✦✦✦</div>
+                        <p class="review-card__text">«Хочу выразить большую благодарность Светлане за её работу и отношение. Профессионально и очень подробно всё объяснила.»</p>
+                    </div>
+                    <span class="review-card__author">— Марина Б.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts" class="contacts">
+        <div class="container contacts__container">
+            <div class="contacts__info reveal">
+                <h2 class="section-title section-title--left">Ждём вас</h2>
+                <p class="contacts__address">
+                    г. Краснодар, Центральный округ,<br>
+                    <strong>Красная улица, 206</strong> (1 этаж)
+                </p>
+                <p class="contacts__working-hours">Ежедневно: с 10:00 до 21:00</p>
+                <div class="contacts__buttons">
+                    <a href="https://wa.me" target="_blank" class="btn btn--wa">Написать в WhatsApp</a>
+                    <a href="https://yclients.com" target="_blank" class="btn btn--online">Записаться онлайн</a>
+                </div>
+            </div>
+            <div class="contacts__map reveal">
+                <iframe src="https://yandex.ru/map-widget/v1/-/CDxn60~2" width="100%" height="400" frameborder="0" allowfullscreen style="border-radius:14px;"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 SK Nail Studio. Все права защищены.</p>
+    </footer>
+
+    <!-- Анимация появления при скролле -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
