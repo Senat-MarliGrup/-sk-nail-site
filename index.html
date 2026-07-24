@@ -35,7 +35,30 @@
 .phone-icon { display: none; color: var(--accent-gold); font-size: 20px; text-decoration: none; margin-right: 15px; }
 
 @media (max-width: 768px) {
+    ..menu-toggle { display: none; background: none; border: none; color: var(--accent-gold); font-size: 24px; cursor: pointer; padding: 0; }
+.phone-icon { display: none; color: var(--accent-gold); font-size: 20px; text-decoration: none; margin-right: 15px; }
+
+@media (max-width: 768px) {
     .btn--header { display: none; }
+    .menu-toggle { display: block; }
+    .phone-icon { display: block; }
+    .header .nav { 
+        display: none; 
+        position: absolute; 
+        top: 70px; 
+        left: 0; 
+        right: 0; 
+        background: rgba(18,17,16,0.95); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        flex-direction: column; 
+        padding: 20px; 
+        border-bottom: 1px solid rgba(197,168,128,0.1);
+        z-index: 99;
+    }
+    .header .nav.active { display: flex; }
+    .header .nav__link { margin: 12px 0; display: block; text-align: center; font-size: 15px; }
+}
     .menu-toggle { display: block; }
     .phone-icon { display: block; }
     .header .nav { 
@@ -321,16 +344,20 @@
 <body>
 
     <!-- Шапка -->
-    <header class="header">
+        <header class="header">
         <div class="container header__container">
             <div class="logo">SK NAIL</div>
-            <nav class="nav">
+            <nav class="nav" id="mobileNav">
                 <a href="#about" class="nav__link">О нас</a>
                 <a href="#portfolio" class="nav__link">Работы</a>
                 <a href="#prices" class="nav__link">Услуги</a>
                 <a href="#reviews" class="nav__link">Отзывы</a>
                 <a href="#contacts" class="nav__link">Контакты</a>
             </nav>
+            <div style="display:flex;align-items:center;">
+                <a href="tel:+79180230206" class="phone-icon">📞</a>
+                <button class="menu-toggle" onclick="document.getElementById('mobileNav').classList.toggle('active')">☰</button>
+            </div>
             <a href="https://yclients.com" target="_blank" class="btn btn--header">Записаться</a>
         </div>
     </header>
